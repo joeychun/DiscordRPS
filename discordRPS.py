@@ -457,5 +457,5 @@ async def on_ready():
     print(bot.user.id)
     print('------')
 
-TOKEN = 'ODA4ODk3MTUyNzI5NzQzNDAw.YCNOLQ.7qRZoiVLITzGmqkgoC6fNK_D2hY'
+TOKEN = 'private info'
 bot.run(TOKEN)
