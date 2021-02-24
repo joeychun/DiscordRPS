@@ -1,6 +1,6 @@
 # Work with Python 3.6
 
-# https://discord.com/api/oauth2/authorize?client_id=739069897606299648&permissions=1073883200&scope=bot
+# https://discord.com/api/oauth2/authorize?client_id=808897152729743400&permissions=1073883200&scope=bot
 
 import discord, asyncio
 from discord.ext import commands, tasks
@@ -46,8 +46,6 @@ class GameManager:
     --------------------
     games: Dictionary that has mappings of game_id(int) and Game(Game object)
     next_id: Integer that is the next_id available as the game_id
-
-
     METHODS
     --------------------
     increase_id(): Increases next_id by 1
@@ -100,7 +98,10 @@ char_to_full = {
 }
 
 game_manager = GameManager()
-bot = commands.Bot(command_prefix='!')
+
+# intents = discord.Intents(messages=True, members=True)
+intents = discord.Intents.all()
+bot = commands.Bot(command_prefix='!', intents=intents)
 
 
 
@@ -277,6 +278,8 @@ async def rps(ctx, mention1, s=10):
 
     # Mapping user ids to Member objects, and getting opponent information
     id_to_member = {}
+    print(ctx)
+    print(ctx.guild)
     for member in ctx.guild.members:
         id_to_member[str(member.id)] = member
 
@@ -359,7 +362,7 @@ async def rps(ctx, mention1, s=10):
         # Check for all of the reactions; look for a one that is not given by a bot
         for reaction in message.reactions:
             async for user in reaction.users():
-                if user != bot.user:
+                if user != bot.user and (reaction.message == game.host_msg or reaction.message == game.opponent_msg):
                     if reaction.emoji == "✊":
                         player_response = 'r'
                         print("{0} chose {1}.".format(user.name, player_response))
@@ -454,5 +457,5 @@ async def on_ready():
     print(bot.user.id)
     print('------')
 
-TOKEN = 'Private Information :)'
+TOKEN = 'ODA4ODk3MTUyNzI5NzQzNDAw.YCNOLQ.7qRZoiVLITzGmqkgoC6fNK_D2hY'
 bot.run(TOKEN)
